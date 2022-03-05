@@ -1,0 +1,26 @@
+on:
+  workflow_call:
+    inputs:
+      folder:
+        description: 'The folder to deploy the Lint to the Future dashboard to'
+        default: '/lint-to-the-future'
+        required: false
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm install -g npm@7
+      - run: npm install
+      - run: npx lint-to-the-future output -o lttfOutput --rootUrl `cut -d'/' -f2 <<< ${{ github.repository }}`${{ inputs.folder }} --previous-results https://${{ github.repository_owner }}.github.io/`cut -d'/' -f2 <<< ${{ github.repository }}`${{inputs.folder}}/data.json
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./lttfOutput
+          destination_dir: ./${{ inputs.folder }}
