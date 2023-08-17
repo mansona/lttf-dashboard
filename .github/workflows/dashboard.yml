@@ -12,11 +12,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.6.6
       - uses: actions/setup-node@v3
         with:
-          node-version: '16'
-          cache: 'yarn'
-      - run: yarn install --non-interactive --pure-lockfile
+          node-version-file: '.nvmrc'
+          cache: 'pnpm'
+
+      - name: 'Install dependencies'
+        run: pnpm install
+
       - run: npx lint-to-the-future output -o lttfOutput --rootUrl `cut -d'/' -f2 <<< ${{ github.repository }}`${{ inputs.folder }} --previous-results https://${{ github.repository_owner }}.github.io/`cut -d'/' -f2 <<< ${{ github.repository }}`${{inputs.folder}}/data.json
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
