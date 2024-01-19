@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: mansona/lttf-dashboard@v2
+      - uses: mansona/lttf-dashboard@v1
         with:
           token: ${{secrets.GITHUB_TOKEN}}
 ```
@@ -47,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: mansona/lttf-dashboard@restructure
+      - uses: mansona/lttf-dashboard@v1
         with:
           folder: '/lint-to-the-future'
           token: ${{secrets.GITHUB_TOKEN}}
