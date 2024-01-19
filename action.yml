@@ -8,6 +8,9 @@ inputs:
   token:
     description: 'Token used to deploy to gh-pages. Should be set to secrets.GITHUB_TOKEN by default'
     required: true
+  cache:
+    description: 'This is passed directly to the actions/setup-node cache field. Refer to their readme for valid values'
+    required: false
 
 runs:
   using: "composite"
@@ -15,7 +18,7 @@ runs:
     - uses: actions/setup-node@v4
       with:
         node-version: '18'
-        cache: 'npm'
+        cache: ${{inputs.cache}}
     - run: npm install
       shell: bash
     - run: npx lint-to-the-future output -o lttfOutput --rootUrl `cut -d'/' -f2 <<< ${{ github.repository }}`${{ inputs.folder }} --previous-results https://${{ github.repository_owner }}.github.io/`cut -d'/' -f2 <<< ${{ github.repository }}`${{inputs.folder}}/data.json
