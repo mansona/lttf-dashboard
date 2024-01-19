@@ -1,5 +1,8 @@
 name: 'Lint to the Future Dashboard'
 description: 'Sets up your lint-to-the-future Dashboard for you'
+branding:
+  icon: 'award'
+  color: 'orange'
 inputs:
   folder:
     description: 'The folder to deploy the Lint to the Future dashboard to'
