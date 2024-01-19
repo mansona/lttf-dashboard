@@ -5,6 +5,9 @@ inputs:
     description: 'The folder to deploy the Lint to the Future dashboard to'
     default: ''
     required: false
+  token:
+    description: 'Token used to deploy to gh-pages. Should be set to secrets.GITHUB_TOKEN by default'
+    required: true
 
 runs:
   using: "composite"
@@ -21,6 +24,6 @@ runs:
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ inputs.token }}
         publish_dir: ./lttfOutput
         destination_dir: ./${{ inputs.folder }}
