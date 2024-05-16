@@ -22,7 +22,13 @@ runs:
       with:
         node-version: '18'
         cache: ${{inputs.cache}}
-    - run: npm install
+    - run: if [ -f ./pnpm-lock.yaml ]; then
+            pnpm i
+          elif [ -f ./yarn.lock ]; then
+            yarn 
+          else
+            npm i 
+          fi
       shell: bash
     - run: npx lint-to-the-future output -o lttfOutput --rootUrl `cut -d'/' -f2 <<< ${{ github.repository }}`${{ inputs.folder }} --previous-results https://${{ github.repository_owner }}.github.io/`cut -d'/' -f2 <<< ${{ github.repository }}`${{inputs.folder}}/data.json
       shell: bash
