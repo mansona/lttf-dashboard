@@ -22,7 +22,8 @@ runs:
       with:
         node-version: '18'
         cache: ${{inputs.cache}}
-    - run: if [ -f ./pnpm-lock.yaml ]; then
+    - run: |
+          if [ -f ./pnpm-lock.yaml ]; then
             pnpm i
           elif [ -f ./yarn.lock ]; then
             yarn 
