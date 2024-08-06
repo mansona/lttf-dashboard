@@ -11,6 +11,10 @@ inputs:
   token:
     description: 'Token used to deploy to gh-pages. Should be set to secrets.GITHUB_TOKEN by default'
     required: true
+  node-version:
+    description: 'The Node.js version to use, passed directly to actions/setup-node node-version field'
+    default: '18'
+    required: false
   cache:
     description: 'This is passed directly to the actions/setup-node cache field. Refer to their readme for valid values'
     required: false
@@ -20,7 +24,7 @@ runs:
   steps:
     - uses: actions/setup-node@v4
       with:
-        node-version: '18'
+        node-version: ${{inputs.node-version}}
         cache: ${{inputs.cache}}
     - run: |
           if [ -f ./pnpm-lock.yaml ]; then
