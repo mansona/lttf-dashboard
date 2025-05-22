@@ -39,9 +39,9 @@ runs:
       uses: actions/checkout@v4
       with:
         ref: gh-pages
-        sparse-checkout: ${{ inputs.folder }}/data.json
+        sparse-checkout: ${{ startsWith('/', inputs.folder) && '.'}}${{ inputs.folder }}${{ endsWith('/', inputs.folder) && '' || '/' }}data.json
         path: lttfTemp
-    - run: npx lint-to-the-future output -o ./lttfOutput --rootUrl `cut -d'/' -f2 <<< ${{ github.repository }}`${{ inputs.folder }} --previous-results lttfTemp/${{ inputs.folder }}/data.json
+    - run: npx lint-to-the-future output -o ./lttfOutput --rootUrl `cut -d'/' -f2 <<< ${{ github.repository }}`${{ inputs.folder }} --previous-results lttfTemp/${{ startsWith('/', inputs.folder) && '.'}}${{ inputs.folder }}${{ endsWith('/', inputs.folder) && '' || '/' }}data.json
       shell: bash
     - name: Deploy
       uses: peaceiris/actions-gh-pages@v3
